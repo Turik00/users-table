@@ -1,0 +1,2 @@
+1. connect to firebase - continue
+2. styled components?
