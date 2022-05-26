@@ -18,8 +18,11 @@ const UserDataForm = (props: any) => {
       if (isUserAdded) {
         toast.success('User created successfuly');
         resetForm(form);
+      } else {
+        toast.error('User ID already exists');
       }
     } else {
+      
       setValidated(true);
     }
   };

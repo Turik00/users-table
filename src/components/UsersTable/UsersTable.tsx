@@ -15,6 +15,10 @@ const UsersTable = (props: any) => {
   }, [])
 
   const deleteUserHandler = async (userId: number) =>{
+    const isConfirmed = window.confirm('Do you want to delete this user?');
+    if (!isConfirmed) {
+      return;
+    }
     if (await deleteUser(userId)) {
       toast.info('User deleted successfuly');
     }

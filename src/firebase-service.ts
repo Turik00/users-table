@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, onSnapshot, query, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, DocumentData, DocumentSnapshot, getDoc, onSnapshot, query, setDoc } from 'firebase/firestore';
 import { db } from './firebase-config';
 import { User } from './interfaces';
 
@@ -10,7 +10,17 @@ export const getAllUsers = (setUsers: React.Dispatch<React.SetStateAction<User[]
   });
 };
 
-export const createUser = async (user: User): Promise<boolean> => {
+export const createUser = async (user: User, isUpdate = false): Promise<boolean> => {
+
+  if (!isUpdate) {
+    const dbUser = await getDoc(doc(db, 'users', `${user.id}`)).catch((err) => {
+      console.log(err);
+    });
+    if (dbUser?.data() != null) {
+        return false;
+    }
+  }
+
   let isSucceded = true;
   // collection is a table in reqular DB
   // document is a row
